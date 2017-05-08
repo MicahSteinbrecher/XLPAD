@@ -26,7 +26,7 @@ var arrowIcon = require('./images/arrow.png');
 
 export default class Home extends React.Component {
     static navigationOptions = {
-        title: 'Your Patients',
+        title: 'Your Cases',
     };
 
     constructor(props) {
@@ -36,20 +36,25 @@ export default class Home extends React.Component {
 
     render() {
         const { navigate } = this.props.navigation;
-        const listItems = this.props.screenProps.patients.map((data, index) =>
+        const listItems = this.props.screenProps.cases.map((data, index) =>
             <TouchableOpacity key={index}
-                              onPress={ () => navigate('Cases', { data: data }) }
+                              onPress={ () => navigate('CaseDetails', { data: data }) }
                               style={ (index == 0) ? Styles.firstListItem : Styles.listItem}
             >
-                <Text style={Styles.listText}
-                      numberOfLines={2}
-                        ellipsizeMode='tail'
-                >
-                    {data.name}
-                </Text>
-                <View style={Styles.row}>
+                <View style={{flexDirection:'row'}}>
+                    <Text style={Styles.id}>
+                        {data.id + ". "}
+                    </Text>
+                    <Text style={Styles.listText}
+                        numberOfLines={2}
+                        ellipsizeMode='tail'>
+                        {data.targets}
+                    </Text>
+                </View>
+                <View style={Styles.dateLabel}>
                     <Text style={Styles.listItemDate}>
-                        {Date(data.dataTimeUpdated).split(' ').slice(0,3).join(' ')}
+                        {data.dateOfProcedure}
+                        {/*{Date(data.dataTimeCreated).split(' ').slice(0,3).join(' ')}*/}
                     </Text>
                     <Image
                         style={Styles.icon}

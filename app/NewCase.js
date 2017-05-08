@@ -25,7 +25,6 @@ import { Institution } from './models/Institution';
 import { getDate, getPatients, getInstitutions, getTargets, getMinDate, getMaxDate } from './utilities';
 import uuid from 'react-native-uuid';
 import ProceduresContainer from './ProceduresContainer';
-import update from 'immutability-helper';
 import Autocomplete from 'react-native-autocomplete-input';
 import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -41,9 +40,7 @@ class NewCase extends React.Component {
         this.realm = new Realm({schema: [Case, Procedure, Complication, Patient, Institution]});
 
         this.state = {
-            name: '',
             age: '',
-            institution: '',
             date: getDate(),
             complications: {
                 str: '',
@@ -74,106 +71,44 @@ class NewCase extends React.Component {
 
     handleButtonPress() {
         console.log(this.state);
-        //if new institution
-            //add new institution
-        if (this.state.institutions.indexOf(this.state.institution) < 0) {
-            this.realm.write(() => {
-               this.realm.create('Institution', {
-                    name: String(this.state.institution),
-                });
+
+        var cases = this.realm.objects('Case').slice();
+        var procedures = this.state.leftProcedures.concat(this.state.rightProcedures);
+        procedures = procedures.filter(function(procedure){ return Object.keys(procedure).length > 0 });
+        console.log(cases.length+1);
+        this.realm.write(() => {
+            let newCase = this.realm.create('Case', {
+                id: String(cases.length+1),
+                dateOfProcedure: String(this.state.date),
+                dateTimeCreated: String(Date.now()),
+                age: String(this.state.age),
+                rutherfordCategory: String(this.state.rutherfordCategory),
+                leftABI: String(this.state.leftABI),
+                rightABI: String(this.state.rightABI),
+                targetLimbs: String(this.state.targetLimbs),
+                success: String(this.state.success),
+                complications: this.state.complications.str,
+                comment: this.state.comment,
+                targets: getTargets(procedures),
             });
-            //fthis.refs.scroll.scrollToPosition(0, 0, true);
-            Alert.alert(
-                'Done',
-                'A new case has been successfully added.'
 
-            )
-        }
-
-
-        var patient = this.realm.objects('Patient').filtered('name == $0', this.state.name)[0];
-
-        //patient exists- add case to patients cases
-        if (patient != null) {
-            console.log('patient: ' + JSON.stringify(patient));
-
-            this.realm.write(() => {
-                var procedures = this.state.leftProcedures.concat(this.state.rightProcedures);
-                procedures = procedures.filter(function(procedure){ return Object.keys(procedure).length > 0 });
-
-                var existingPatient = this.realm.create('Patient', {id: patient.id}, true);
-                existingPatient.cases.push({
-                        id: uuid.v4(),
-                        dateOfProcedure: String(this.state.date),
-                        name: String(this.state.name),
-                        age: String(this.state.age),
-                        institution: String(this.state.institution),
-                        rutherfordCategory: String(this.state.rutherfordCategory),
-                        leftABI: String(this.state.leftABI),
-                        rightABI: String(this.state.rightABI),
-                        targetLimbs: String(this.state.targetLimbs),
-                        success: String(this.state.success),
-                        complications: this.state.complications.str,
-                        comment: this.state.comment,
-                        targets: getTargets(procedures),
-                    });
-                var idx = existingPatient.cases.length-1;
-                for (var i in procedures) {
-                    if (Object.keys(procedures[i]).length > 0) {
-                        existingPatient.cases[idx].procedures.push(procedures[i]);
-                    }
+            for (var i in procedures) {
+                if (Object.keys(procedures[i]).length > 0) {
+                    newCase.procedures.push(procedures[i]);
                 }
-                console.log('(ln 74) updated patient : '+ existingPatient.name + ' : ' + JSON.stringify(existingPatient));
-            });
-            this.resetState();
-        }
-
-        // patient doesn't exist- create new patient
-        else if (this.state.name != '') {
-            this.realm.write(() => {
-                let newPatient = this.realm.create('Patient', {
-                    name: String(this.state.name),
-                    id: uuid.v4(),
-                    dateTimeCreated: Date.now(),
-                    dateTimeUpdated: Date.now(),
-                });
-                var procedures = this.state.leftProcedures.concat(this.state.rightProcedures);
-                procedures = procedures.filter(function(procedure){ return Object.keys(procedure).length > 0 });
-
-                newPatient.cases.push({
-                    id: uuid.v4(),
-                    dateOfProcedure: String(this.state.date),
-                    name: String(this.state.name),
-                    age: String(this.state.age),
-                    institution: String(this.state.institution),
-                    rutherfordCategory: String(this.state.rutherfordCategory),
-                    leftABI: String(this.state.leftABI),
-                    rightABI: String(this.state.rightABI),
-                    targetLimbs: String(this.state.targetLimbs),
-                    success: String(this.state.success),
-                    complications: this.state.complications.str,
-                    comment: this.state.comment,
-                    targets: getTargets(procedures),
-                });
-                var idx = newPatient.cases.length-1;
-
-                for (var i in procedures) {
-                    if (Object.keys(procedures[i]).length > 0) {
-                        newPatient.cases[idx].procedures.push(procedures[i]);
-                    }
-                }
-                console.log('created new patient ' + newPatient.name + ': ' + JSON.stringify(newPatient));
-            });
-            this.resetState();
-            console.log('ln 85 new case state: ' + JSON.stringify(this.state));
-        }
+            }
+            console.log('created new case ' + newCase.id + ': ' + JSON.stringify(newCase));
+        });
+        this.resetState();
+        Alert.alert(
+            'Done',
+            'A new case has been successfully added.'
+        )
     }
 
     resetState() {
         this.setState({
-            name: '',
             age: '',
-            institution: '',
             date: getDate(),
             leftProcedures: [{}],
             rightProcedures: [{}],
@@ -281,59 +216,6 @@ class NewCase extends React.Component {
             });
     }
 
-    /* replace by <handle procedure change> */
-    // handleTargetVesselChange(value, index){
-    //     console.log('target vessel updated : ' + value + ' at lesion: ' + index);
-    //     var procedures = this.state.procedures;
-    //     procedures[index].targetVessel = value;
-    //     this.setState({
-    //         procedures: procedures,
-    //     });
-    //     //this.setState(update(this.state, {procedures: {index: {targetVessel: {$set: value}}}}));
-    //     // var isOccluded = (value=='Yes') ? true : false;
-    //     // this.setState(update(this.state.procedures[index], {chronicTotalOcclusion: {$set: isOccluded }}));
-    // };
-    //
-    // handleCTOChange(value, index){
-    //     console.log('CTO value updated: ' + value + ' at lesion: ' + index);
-    //     var procedures = this.state.procedures;
-    //     procedures[index].isCTO = value;
-    //     this.setState({
-    //         procedures: procedures,
-    //     });
-    // }
-    //
-    // handleSliderChange(value, index){
-    //     console.log('Stenosis percentage value updated: ' + value + ' at lesion: ' + index);
-    //     var procedures = this.state.procedures;
-    //     procedures[index].stenosisPercentage = value;
-    //     this.setState({
-    //         procedures: procedures,
-    //     });
-    // }
-    //
-    // handleInterventionsChange(value, index){
-    //     console.log('Interventions updated: ' + value + ' at lesion: ' + index);
-    //     var procedures = this.state.procedures;
-    //     procedures[index].interventions = value;
-    //     this.setState({
-    //         procedures: procedures,
-    //     });
-    // }
-    getMatches(query, src){
-        var matches = [];
-        if (query != '') {
-            query = query.toLowerCase();
-            for (var i in src) {
-                var name = src[i].toLowerCase();
-                if (name.includes(query)) {
-                    matches.push(src[i]);
-                }
-            }
-        }
-        return matches;
-    }
-
     render() {
 
         if (this.state.targetLimbs == 'Left') {
@@ -353,32 +235,11 @@ class NewCase extends React.Component {
 
                         <Text style={Styles.sectionHeader}>General Information</Text>
 
-                        <Text style={Styles.inputHeader}>Patient First and Last Name</Text>
-
-                        <Autocomplete
-                            ref="name"
-                            data={this.state.matchingNames}
-                            value={this.state.name}
-                            onChangeText={text => {matches = this.getMatches(text, this.state.patients);
-                                                   this.setState({matchingNames: matches, name: text})}}
-                            renderItem={data => (
-                              <TouchableOpacity
-                              style={{height:40}}
-                              onPress={() => {this.refs.name.blur();
-                                  this.setState({ name: data, matchingNames:[] })}
-                              }>
-                                <Text>{data}</Text>
-                              </TouchableOpacity>
-                            )}
-                        />
-
-
                         <Text style={Styles.inputHeader}>Age</Text>
                         <TextInput
                             style={Styles.input}
                             onChangeText={(age) => this.setState({age})}
                             value={this.state.age}
-                            backgroundColor="white"
                             keyboardType="numbers-and-punctuation"
                         />
 
@@ -404,24 +265,6 @@ class NewCase extends React.Component {
                                   }
                                 }}
                             onDateChange={(date) => {this.setState({date})}}
-                        />
-
-                        <Text style={Styles.inputHeader}>Institution</Text>
-                        {/*<Text>*/}
-                            {/*{this.state.institution}*/}
-                        {/*</Text>*/}
-                        <Autocomplete
-                            data={this.state.matchingInstitutions}
-                            value={this.state.institution}
-                            onChangeText={text => {matches = this.getMatches(text, this.state.institutions);
-                                                   this.setState({matchingInstitutions: matches, institution: text})}}
-                            renderItem={data => (
-                              <TouchableOpacity
-                              style={{height:40}}
-                              onPress={() => {this.setState({ institution: data, matchingInstitutions:[] })}}>
-                                <Text>{data}</Text>
-                              </TouchableOpacity>
-                            )}
                         />
 
                         <Text style={Styles.inputHeader}>Rutherford Category</Text>

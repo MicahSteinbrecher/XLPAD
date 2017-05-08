@@ -16,16 +16,17 @@ import { splitVar, toString } from './utilities';
 export default class CaseDetails extends React.Component {
 
     static navigationOptions = ({ navigation, screenProps }) => ({
-        title: navigation.state.params.data.name + "'s Case",
+        title: "Case " + navigation.state.params.data.id,
     });
 
     render() {
         var data = this.props.navigation.state.params.data;
         //normalize case data
         var normalizedCase = {};
+        data.procedures = data.procedures.slice();
         for (var idx in data) {
-            if (data[idx] != null && data[idx] != '') {
-                if (idx == 'id') {
+            if (data[idx] != 'undefined' && data[idx] != null && data[idx] != ''  && data[idx] != []) {
+                if (idx == 'id' ) {
                     continue;
                 }
                 if (idx == 'dateTimeCreated') {

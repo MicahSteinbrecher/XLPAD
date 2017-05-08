@@ -83,6 +83,9 @@ export function getInstitutions(){
 /*takes case procedures and returns a string containing the cases target vessels*/
 export function getTargets(procedures){
     var result = '';
+    if (procedures.length==0){
+        return 'No Lesions Specified'
+    }
     for (var i=0; i < procedures.length; i++) {
         if (i+1 == procedures.length) {
             return result += procedures[i].leg + ' ' + procedures[i].targetVessel
@@ -91,33 +94,35 @@ export function getTargets(procedures){
     }
 }
 
-export function getCases(patient, targetVessel){
+export function getCases(id, targetVessel){
     var cases = realm.objects('Case').slice();
     var result = []
-    if (patient != '' && targetVessel != ''){
+    if (id != '' && targetVessel != ''){
         for (var i in cases){
-            if ( cases[i].name.toLowerCase().includes(patient.toLowerCase()) &&
+            if ( cases[i].id.includes(id) &&
                 cases[i].targets.toLowerCase().includes(targetVessel.toLowerCase()) ){
                 result.push(cases[i])
             }
         }
-        return result
+        return result.map(x => Object.assign({}, x));
     }
-    if (patient != ''){
+
+    if (id != ''){
         for (var i in cases){
-            if (cases[i].name.toLowerCase().includes(patient.toLowerCase())){
+            if (cases[i].id.includes(id)){
                 result.push(cases[i])
             }
         }
-        return result
+        return result.map(x => Object.assign({}, x));
     }
+
     if (targetVessel != ''){
         for (var i in cases){
             if (cases[i].targets.toLowerCase().includes(targetVessel.toLowerCase())){
                 result.push(cases[i])
             }
         }
-        return result
+        return result.map(x => Object.assign({}, x));
     }
     return null
 }
@@ -148,7 +153,7 @@ function caseToString(obj) {
         if (!obj[i].isCTO) {
             result += '\n' + 'Stenosis Percentage: ' + obj[i].stenosisPercentage;
         }
-        if (i+1<obj.length){
+        if (parseInt(i)+1 != obj.length){
             result += '\n\n';
         }
     }

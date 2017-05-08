@@ -1251,29 +1251,29 @@ var _NewCase = require(503        ); // 503 = ./NewCase
 
 var _NewCase2 = babelHelpers.interopRequireDefault(_NewCase);
 
-var _CaseDetails = require(537            ); // 537 = ./CaseDetails
+var _CaseDetails = require(538            ); // 538 = ./CaseDetails
 
 var _CaseDetails2 = babelHelpers.interopRequireDefault(_CaseDetails);
 
-var _Home = require(538     ); // 538 = ./Home
+var _Home = require(539     ); // 539 = ./Home
 
 var _Home2 = babelHelpers.interopRequireDefault(_Home);
 
-var _Cases = require(540      ); // 540 = ./Cases
+var _Cases = require(541      ); // 541 = ./Cases
 
 var _Cases2 = babelHelpers.interopRequireDefault(_Cases);
 
-var _FindCase = require(541         ); // 541 = ./FindCase
+var _FindCase = require(542         ); // 542 = ./FindCase
 
 var _FindCase2 = babelHelpers.interopRequireDefault(_FindCase);
 
 var _Case = require(504            ); // 504 = ./models/Case
 
-var _Complication = require(506                    ); // 506 = ./models/Complication
+var _Complication = require(511                    ); // 511 = ./models/Complication
 
 var _Procedure = require(505                 ); // 505 = ./models/Procedure
 
-var _Patient = require(511               ); // 511 = ./models/Patient
+var _Patient = require(510               ); // 510 = ./models/Patient
 
 var _Institution = require(512                   ); // 512 = ./models/Institution
 
@@ -1314,12 +1314,12 @@ var XLPAD = function (_React$Component) {
         var _this = babelHelpers.possibleConstructorReturn(this, (XLPAD.__proto__ || Object.getPrototypeOf(XLPAD)).call(this, props));
 
         _this.realm = new _realm2.default({ schema: [_Case.Case, _Procedure.Procedure, _Complication.Complication, _Patient.Patient, _Institution.Institution] });
-        var data = _this.realm.objects('Patient').sorted('dateTimeUpdated', true);
-        var patients = data.map(function (x) {
+        var data = _this.realm.objects('Case').sorted('dateTimeCreated', true).slice();
+        var cases = data.map(function (x) {
             return babelHelpers.extends({}, x);
         });
         _this.state = {
-            patients: patients
+            cases: cases
         };
         _this.onNavigationStateChange = _this.onNavigationStateChange.bind(_this);
         return _this;
@@ -1331,12 +1331,12 @@ var XLPAD = function (_React$Component) {
             console.log(currentState);
             console.log(currentState.index);
             if (currentState.index == 0 && prevState.index == 0 && currentState.routes[0].index == 0) {
-                var data = this.realm.objects('Patient').sorted('dateTimeUpdated', true);
-                var patients = data.map(function (x) {
+                var data = this.realm.objects('Case').sorted('dateTimeCreated', true).slice();
+                var cases = data.map(function (x) {
                     return babelHelpers.extends({}, x);
                 });
                 this.setState({
-                    patients: patients
+                    cases: cases
                 });
             }
         }
@@ -59426,6 +59426,7 @@ var Styles = _reactNative.StyleSheet.create({
         borderColor: '#d6d7da'
     },
     input: {
+        backgroundColor: "white",
         height: 40,
         borderColor: '#b9b9b9',
         borderRadius: 1,
@@ -59453,8 +59454,7 @@ var Styles = _reactNative.StyleSheet.create({
         flexDirection: 'row',
         minHeight: 60,
         borderColor: 'gray',
-        borderBottomWidth: 1,
-        alignItems: 'center'
+        borderBottomWidth: 1
     },
     firstListItem: {
         width: screenWidth,
@@ -59463,8 +59463,7 @@ var Styles = _reactNative.StyleSheet.create({
         minHeight: 60,
         borderColor: 'gray',
         borderBottomWidth: 1,
-        borderTopWidth: 1,
-        alignItems: 'center'
+        borderTopWidth: 1
     },
     listItemSearch: {
         width: screenWidth,
@@ -59500,13 +59499,13 @@ var Styles = _reactNative.StyleSheet.create({
         borderBottomWidth: 1,
         borderTopWidth: 1
     },
-    row: {
-        flexDirection: 'row'
-    },
-    column: {
-        flexDirection: 'column',
+    dateLabel: {
+        flexDirection: 'row',
         position: 'absolute',
         left: screenWidth * .65
+    },
+    column: {
+        flexDirection: 'column'
     },
     listItemDate: {
         marginRight: 10,
@@ -59529,8 +59528,8 @@ var Styles = _reactNative.StyleSheet.create({
         marginTop: 10,
         marginBottom: 10
     },
-    name: {
-        marginTop: 10,
+    id: {
+        fontSize: 16,
         fontWeight: 'bold'
     }
 });
@@ -59557,15 +59556,15 @@ var _Style2 = babelHelpers.interopRequireDefault(_Style);
 
 var _Case = require(504            ); // 504 = ./models/Case
 
-var _reactNativeDatepicker = require(507                      ); // 507 = react-native-datepicker
+var _reactNativeDatepicker = require(506                      ); // 506 = react-native-datepicker
 
 var _reactNativeDatepicker2 = babelHelpers.interopRequireDefault(_reactNativeDatepicker);
 
-var _Patient = require(511               ); // 511 = ./models/Patient
+var _Patient = require(510               ); // 510 = ./models/Patient
 
 var _Procedure = require(505                 ); // 505 = ./models/Procedure
 
-var _Complication = require(506                    ); // 506 = ./models/Complication
+var _Complication = require(511                    ); // 511 = ./models/Complication
 
 var _Institution = require(512                   ); // 512 = ./models/Institution
 
@@ -59579,17 +59578,13 @@ var _ProceduresContainer = require(520                    ); // 520 = ./Procedur
 
 var _ProceduresContainer2 = babelHelpers.interopRequireDefault(_ProceduresContainer);
 
-var _immutabilityHelper = require(528                  ); // 528 = immutability-helper
-
-var _immutabilityHelper2 = babelHelpers.interopRequireDefault(_immutabilityHelper);
-
-var _reactNativeAutocompleteInput = require(530                              ); // 530 = react-native-autocomplete-input
+var _reactNativeAutocompleteInput = require(531                              ); // 531 = react-native-autocomplete-input
 
 var _reactNativeAutocompleteInput2 = babelHelpers.interopRequireDefault(_reactNativeAutocompleteInput);
 
-var _reactNativeAutogrowTextinput = require(531                              ); // 531 = react-native-autogrow-textinput
+var _reactNativeAutogrowTextinput = require(532                              ); // 532 = react-native-autogrow-textinput
 
-var _reactNativeKeyboardAwareScrollView = require(533                                      ); // 533 = react-native-keyboard-aware-scroll-view
+var _reactNativeKeyboardAwareScrollView = require(534                                      ); // 534 = react-native-keyboard-aware-scroll-view
 
 var _reactNativeCheckbox = require(525                    ); // 525 = react-native-checkbox
 
@@ -59606,9 +59601,7 @@ var NewCase = function (_React$Component) {
         _this.realm = new _realm2.default({ schema: [_Case.Case, _Procedure.Procedure, _Complication.Complication, _Patient.Patient, _Institution.Institution] });
 
         _this.state = {
-            name: '',
             age: '',
-            institution: '',
             date: (0, _utilities.getDate)(),
             complications: {
                 str: '',
@@ -59635,100 +59628,43 @@ var NewCase = function (_React$Component) {
 
             console.log(this.state);
 
-            if (this.state.institutions.indexOf(this.state.institution) < 0) {
-                this.realm.write(function () {
-                    _this2.realm.create('Institution', {
-                        name: String(_this2.state.institution)
-                    });
+            var cases = this.realm.objects('Case').slice();
+            var procedures = this.state.leftProcedures.concat(this.state.rightProcedures);
+            procedures = procedures.filter(function (procedure) {
+                return Object.keys(procedure).length > 0;
+            });
+            console.log(cases.length + 1);
+            this.realm.write(function () {
+                var newCase = _this2.realm.create('Case', {
+                    id: String(cases.length + 1),
+                    dateOfProcedure: String(_this2.state.date),
+                    dateTimeCreated: String(Date.now()),
+                    age: String(_this2.state.age),
+                    rutherfordCategory: String(_this2.state.rutherfordCategory),
+                    leftABI: String(_this2.state.leftABI),
+                    rightABI: String(_this2.state.rightABI),
+                    targetLimbs: String(_this2.state.targetLimbs),
+                    success: String(_this2.state.success),
+                    complications: _this2.state.complications.str,
+                    comment: _this2.state.comment,
+                    targets: (0, _utilities.getTargets)(procedures)
                 });
 
-                _reactNative.Alert.alert('Done', 'A new case has been successfully added.');
-            }
-
-            var patient = this.realm.objects('Patient').filtered('name == $0', this.state.name)[0];
-
-            if (patient != null) {
-                console.log('patient: ' + JSON.stringify(patient));
-
-                this.realm.write(function () {
-                    var procedures = _this2.state.leftProcedures.concat(_this2.state.rightProcedures);
-                    procedures = procedures.filter(function (procedure) {
-                        return Object.keys(procedure).length > 0;
-                    });
-
-                    var existingPatient = _this2.realm.create('Patient', { id: patient.id }, true);
-                    existingPatient.cases.push({
-                        id: _reactNativeUuid2.default.v4(),
-                        dateOfProcedure: String(_this2.state.date),
-                        name: String(_this2.state.name),
-                        age: String(_this2.state.age),
-                        institution: String(_this2.state.institution),
-                        rutherfordCategory: String(_this2.state.rutherfordCategory),
-                        leftABI: String(_this2.state.leftABI),
-                        rightABI: String(_this2.state.rightABI),
-                        targetLimbs: String(_this2.state.targetLimbs),
-                        success: String(_this2.state.success),
-                        complications: _this2.state.complications.str,
-                        comment: _this2.state.comment,
-                        targets: (0, _utilities.getTargets)(procedures)
-                    });
-                    var idx = existingPatient.cases.length - 1;
-                    for (var i in procedures) {
-                        if (Object.keys(procedures[i]).length > 0) {
-                            existingPatient.cases[idx].procedures.push(procedures[i]);
-                        }
+                for (var i in procedures) {
+                    if (Object.keys(procedures[i]).length > 0) {
+                        newCase.procedures.push(procedures[i]);
                     }
-                    console.log('(ln 74) updated patient : ' + existingPatient.name + ' : ' + JSON.stringify(existingPatient));
-                });
-                this.resetState();
-            } else if (this.state.name != '') {
-                    this.realm.write(function () {
-                        var newPatient = _this2.realm.create('Patient', {
-                            name: String(_this2.state.name),
-                            id: _reactNativeUuid2.default.v4(),
-                            dateTimeCreated: Date.now(),
-                            dateTimeUpdated: Date.now()
-                        });
-                        var procedures = _this2.state.leftProcedures.concat(_this2.state.rightProcedures);
-                        procedures = procedures.filter(function (procedure) {
-                            return Object.keys(procedure).length > 0;
-                        });
-
-                        newPatient.cases.push({
-                            id: _reactNativeUuid2.default.v4(),
-                            dateOfProcedure: String(_this2.state.date),
-                            name: String(_this2.state.name),
-                            age: String(_this2.state.age),
-                            institution: String(_this2.state.institution),
-                            rutherfordCategory: String(_this2.state.rutherfordCategory),
-                            leftABI: String(_this2.state.leftABI),
-                            rightABI: String(_this2.state.rightABI),
-                            targetLimbs: String(_this2.state.targetLimbs),
-                            success: String(_this2.state.success),
-                            complications: _this2.state.complications.str,
-                            comment: _this2.state.comment,
-                            targets: (0, _utilities.getTargets)(procedures)
-                        });
-                        var idx = newPatient.cases.length - 1;
-
-                        for (var i in procedures) {
-                            if (Object.keys(procedures[i]).length > 0) {
-                                newPatient.cases[idx].procedures.push(procedures[i]);
-                            }
-                        }
-                        console.log('created new patient ' + newPatient.name + ': ' + JSON.stringify(newPatient));
-                    });
-                    this.resetState();
-                    console.log('ln 85 new case state: ' + JSON.stringify(this.state));
                 }
+                console.log('created new case ' + newCase.id + ': ' + JSON.stringify(newCase));
+            });
+            this.resetState();
+            _reactNative.Alert.alert('Done', 'A new case has been successfully added.');
         }
     }, {
         key: 'resetState',
         value: function resetState() {
             this.setState({
-                name: '',
                 age: '',
-                institution: '',
                 date: (0, _utilities.getDate)(),
                 leftProcedures: [{}],
                 rightProcedures: [{}],
@@ -59838,21 +59774,6 @@ var NewCase = function (_React$Component) {
             });
         }
     }, {
-        key: 'getMatches',
-        value: function getMatches(query, src) {
-            var matches = [];
-            if (query != '') {
-                query = query.toLowerCase();
-                for (var i in src) {
-                    var name = src[i].toLowerCase();
-                    if (name.includes(query)) {
-                        matches.push(src[i]);
-                    }
-                }
-            }
-            return matches;
-        }
-    }, {
         key: 'render',
         value: function render() {
             var _this4 = this;
@@ -59881,36 +59802,6 @@ var NewCase = function (_React$Component) {
                 _react2.default.createElement(
                     _reactNative.Text,
                     { style: _Style2.default.inputHeader },
-                    'Patient First and Last Name'
-                ),
-                _react2.default.createElement(_reactNativeAutocompleteInput2.default, {
-                    ref: 'name',
-                    data: this.state.matchingNames,
-                    value: this.state.name,
-                    onChangeText: function onChangeText(text) {
-                        matches = _this4.getMatches(text, _this4.state.patients);
-                        _this4.setState({ matchingNames: matches, name: text });
-                    },
-                    renderItem: function renderItem(data) {
-                        return _react2.default.createElement(
-                            _reactNative.TouchableOpacity,
-                            {
-                                style: { height: 40 },
-                                onPress: function onPress() {
-                                    _this4.refs.name.blur();
-                                    _this4.setState({ name: data, matchingNames: [] });
-                                } },
-                            _react2.default.createElement(
-                                _reactNative.Text,
-                                null,
-                                data
-                            )
-                        );
-                    }
-                }),
-                _react2.default.createElement(
-                    _reactNative.Text,
-                    { style: _Style2.default.inputHeader },
                     'Age'
                 ),
                 _react2.default.createElement(_reactNative.TextInput, {
@@ -59919,7 +59810,6 @@ var NewCase = function (_React$Component) {
                         return _this4.setState({ age: age });
                     },
                     value: this.state.age,
-                    backgroundColor: 'white',
                     keyboardType: 'numbers-and-punctuation'
                 }),
                 _react2.default.createElement(
@@ -59949,34 +59839,6 @@ var NewCase = function (_React$Component) {
                     },
                     onDateChange: function onDateChange(date) {
                         _this4.setState({ date: date });
-                    }
-                }),
-                _react2.default.createElement(
-                    _reactNative.Text,
-                    { style: _Style2.default.inputHeader },
-                    'Institution'
-                ),
-                _react2.default.createElement(_reactNativeAutocompleteInput2.default, {
-                    data: this.state.matchingInstitutions,
-                    value: this.state.institution,
-                    onChangeText: function onChangeText(text) {
-                        matches = _this4.getMatches(text, _this4.state.institutions);
-                        _this4.setState({ matchingInstitutions: matches, institution: text });
-                    },
-                    renderItem: function renderItem(data) {
-                        return _react2.default.createElement(
-                            _reactNative.TouchableOpacity,
-                            {
-                                style: { height: 40 },
-                                onPress: function onPress() {
-                                    _this4.setState({ institution: data, matchingInstitutions: [] });
-                                } },
-                            _react2.default.createElement(
-                                _reactNative.Text,
-                                null,
-                                data
-                            )
-                        );
                     }
                 }),
                 _react2.default.createElement(
@@ -60095,21 +59957,18 @@ exports.Case = undefined;
 
 var _Procedure = require(505          ); // 505 = ./Procedure
 
-var _Complication = require(506             ); // 506 = ./Complication
-
 var Case = exports.Case = {
     name: 'Case',
     primaryKey: 'id',
     properties: {
         id: 'string',
+        dateTimeCreated: 'string',
         dateOfProcedure: 'string',
-        name: 'string',
         age: { type: 'string', optional: true },
-        institution: 'string',
         rutherfordCategory: { type: 'string', optional: true },
         leftABI: { type: 'string', optional: true },
         rightABI: { type: 'string', optional: true },
-        targetLimbs: 'string',
+        targetLimbs: { type: 'string', optional: true },
         targets: 'string',
         success: { type: 'string', optional: true },
         procedures: { type: 'list', objectType: 'Procedure' },
@@ -60125,23 +59984,13 @@ var Procedure = exports.Procedure = {
     name: 'Procedure',
     properties: {
         'leg': 'string',
-        'targetVessel': 'string',
-        'isCTO': 'bool',
+        'targetVessel': { type: 'string', optional: true },
+        'isCTO': { type: 'bool', optional: true },
         'stenosisPercentage': { type: 'string', optional: true },
-        'interventions': 'string'
+        'interventions': { type: 'string', optional: true }
     }
 };
 }, 505, null, "XLPAD/app/models/Procedure.js");
-__d(/* XLPAD/app/models/Complication.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var Complication = exports.Complication = {
-    name: 'Complication',
-    properties: {
-        'complication': 'string'
-    }
-};
-}, 506, null, "XLPAD/app/models/Complication.js");
 __d(/* react-native-datepicker/index.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -60152,11 +60001,11 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
 
 var _reactNative = require(46            ); // 46 = react-native
 
-var _style = require(508      ); // 508 = ./style
+var _style = require(507      ); // 507 = ./style
 
 var _style2 = babelHelpers.interopRequireDefault(_style);
 
-var _moment = require(509     ); // 509 = moment
+var _moment = require(508     ); // 508 = moment
 
 var _moment2 = babelHelpers.interopRequireDefault(_moment);
 
@@ -60605,7 +60454,7 @@ DatePicker.defaultProps = {
   duration: 300,
   confirmBtnText: '确定',
   cancelBtnText: '取消',
-  iconSource: require(510              ), // 510 = ./date_icon.png
+  iconSource: require(509              ), // 509 = ./date_icon.png
   customStyles: {},
 
   showIcon: true,
@@ -60640,7 +60489,7 @@ DatePicker.propTypes = {
 };
 
 exports.default = DatePicker;
-}, 507, null, "react-native-datepicker/index.js");
+}, 506, null, "react-native-datepicker/index.js");
 __d(/* react-native-datepicker/style.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -60721,7 +60570,7 @@ var style = _reactNative.StyleSheet.create({
 });
 
 exports.default = style;
-}, 508, null, "react-native-datepicker/style.js");
+}, 507, null, "react-native-datepicker/style.js");
 __d(/* moment/moment.js */function(global, require, module, exports) {
 
 ;(function (global, factory) {
@@ -64646,15 +64495,15 @@ __d(/* moment/moment.js */function(global, require, module, exports) {
 
     return hooks;
 });
-}, 509, null, "moment/moment.js");
+}, 508, null, "moment/moment.js");
 __d(/* react-native-datepicker/date_icon.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/node_modules/react-native-datepicker","width":64,"height":64,"scales":[1],"hash":"1edd5017f455b09c608e175b1285c06d","name":"date_icon","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
-}, 510, null, "react-native-datepicker/date_icon.png");
+}, 509, null, "react-native-datepicker/date_icon.png");
 __d(/* XLPAD/app/models/Patient.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.Patient = undefined;
 
-var _Complication = require(506             ); // 506 = ./Complication
+var _Complication = require(511             ); // 511 = ./Complication
 
 var Patient = exports.Patient = {
     name: 'Patient',
@@ -64667,7 +64516,17 @@ var Patient = exports.Patient = {
         cases: { type: 'list', objectType: 'Case' }
     }
 };
-}, 511, null, "XLPAD/app/models/Patient.js");
+}, 510, null, "XLPAD/app/models/Patient.js");
+__d(/* XLPAD/app/models/Complication.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var Complication = exports.Complication = {
+    name: 'Complication',
+    properties: {
+        'complication': 'string'
+    }
+};
+}, 511, null, "XLPAD/app/models/Complication.js");
 __d(/* XLPAD/app/models/Institution.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -64692,11 +64551,11 @@ exports.getCases = getCases;
 exports.splitVar = splitVar;
 exports.toString = toString;
 
-var _Patient = require(511               ); // 511 = ./models/Patient
+var _Patient = require(510               ); // 510 = ./models/Patient
 
 var _Case = require(504            ); // 504 = ./models/Case
 
-var _Complication = require(506                    ); // 506 = ./models/Complication
+var _Complication = require(511                    ); // 511 = ./models/Complication
 
 var _Procedure = require(505                 ); // 505 = ./models/Procedure
 
@@ -64783,6 +64642,9 @@ function getInstitutions() {
 
 function getTargets(procedures) {
     var result = '';
+    if (procedures.length == 0) {
+        return 'No Lesions Specified';
+    }
     for (var i = 0; i < procedures.length; i++) {
         if (i + 1 == procedures.length) {
             return result += procedures[i].leg + ' ' + procedures[i].targetVessel;
@@ -64791,25 +64653,27 @@ function getTargets(procedures) {
     }
 }
 
-function getCases(patient, targetVessel) {
+function getCases(id, targetVessel) {
     var cases = realm.objects('Case').slice();
     var result = [];
-    if (patient != '' && targetVessel != '') {
+    if (id != '' && targetVessel != '') {
         for (var i in cases) {
-            if (cases[i].name.toLowerCase().includes(patient.toLowerCase()) && cases[i].targets.toLowerCase().includes(targetVessel.toLowerCase())) {
+            if (cases[i].id.includes(id) && cases[i].targets.toLowerCase().includes(targetVessel.toLowerCase())) {
                 result.push(cases[i]);
             }
         }
         return result;
     }
-    if (patient != '') {
+
+    if (id != '') {
         for (var i in cases) {
-            if (cases[i].name.toLowerCase().includes(patient.toLowerCase())) {
+            if (cases[i].id.includes(id)) {
                 result.push(cases[i]);
             }
         }
         return result;
     }
+
     if (targetVessel != '') {
         for (var i in cases) {
             if (cases[i].targets.toLowerCase().includes(targetVessel.toLowerCase())) {
@@ -64847,7 +64711,7 @@ function caseToString(obj) {
         if (!obj[i].isCTO) {
             result += '\n' + 'Stenosis Percentage: ' + obj[i].stenosisPercentage;
         }
-        if (i + 1 < obj.length) {
+        if (parseInt(i) + 1 != obj.length) {
             result += '\n\n';
         }
     }
@@ -65456,7 +65320,7 @@ var _reactNativeCheckbox = require(525                    ); // 525 = react-nati
 
 var _reactNativeCheckbox2 = babelHelpers.interopRequireDefault(_reactNativeCheckbox);
 
-var _reactNativeRadioButtons = require(542                         ); // 542 = react-native-radio-buttons
+var _reactNativeRadioButtons = require(528                         ); // 528 = react-native-radio-buttons
 
 var _Style = require(502      ); // 502 = ./Style
 
@@ -65816,18 +65680,18 @@ __d(/* react-native-radio-buttons/lib/index.js */function(global, require, modul
 });
 exports.RadioButtons = exports.SegmentedControls = undefined;
 
-var _radioButtons = require(543              ); // 543 = ./radio-buttons
+var _radioButtons = require(529              ); // 529 = ./radio-buttons
 
 var _radioButtons2 = babelHelpers.interopRequireDefault(_radioButtons);
 
-var _segmentedControls = require(544                   ); // 544 = ./segmented-controls
+var _segmentedControls = require(530                   ); // 530 = ./segmented-controls
 
 var _segmentedControls2 = babelHelpers.interopRequireDefault(_segmentedControls);
 
 exports.default = _radioButtons2.default;
 exports.SegmentedControls = _segmentedControls2.default;
 exports.RadioButtons = _radioButtons2.default;
-}, 542, null, "react-native-radio-buttons/lib/index.js");
+}, 528, null, "react-native-radio-buttons/lib/index.js");
 __d(/* react-native-radio-buttons/lib/radio-buttons.js */function(global, require, module, exports) {'use strict';
 
 var React = require(13     ); // 13 = react
@@ -65960,7 +65824,7 @@ RadioButtons.defaultProps = {
 RadioButtons.propTypes = propTypes;
 
 module.exports = RadioButtons;
-}, 543, null, "react-native-radio-buttons/lib/radio-buttons.js");
+}, 529, null, "react-native-radio-buttons/lib/radio-buttons.js");
 __d(/* react-native-radio-buttons/lib/segmented-controls.js */function(global, require, module, exports) {'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -65975,7 +65839,7 @@ var _reactNative = require(46            ); // 46 = react-native
 
 var _reactNative2 = babelHelpers.interopRequireDefault(_reactNative);
 
-var _ = require(542 ); // 542 = ./
+var _ = require(528 ); // 528 = ./
 
 var _2 = babelHelpers.interopRequireDefault(_);
 
@@ -66146,185 +66010,7 @@ var DEFAULTS = {
 
 };
 exports.default = SegmentedControls;
-}, 544, null, "react-native-radio-buttons/lib/segmented-controls.js");
-__d(/* immutability-helper/index.js */function(global, require, module, exports) {var invariant = require(529        ); // 529 = invariant
-
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var splice = Array.prototype.splice;
-
-var assign = Object.assign || function assign(target, source) {
-  var keys = getAllKeys(source);
-  for (var i = 0; i < keys.length; i++) {
-    var key = keys[i];
-    if (hasOwnProperty.call(source, key)) {
-      target[key] = source[key];
-    }
-  }
-  return target;
-};
-
-var getAllKeys = typeof Object.getOwnPropertySymbols === 'function' ? function (obj) {
-  return Object.keys(obj).concat(Object.getOwnPropertySymbols(obj));
-} : function (obj) {
-  return Object.keys(obj);
-};
-
-function copy(object) {
-  if (object instanceof Array) {
-    return object.slice();
-  } else if (object && typeof object === 'object') {
-    return assign(new object.constructor(), object);
-  } else {
-    return object;
-  }
-}
-
-function newContext() {
-  var commands = assign({}, defaultCommands);
-  update.extend = function (directive, fn) {
-    commands[directive] = fn;
-  };
-
-  return update;
-
-  function update(object, spec) {
-    if (!(Array.isArray(object) && Array.isArray(spec))) {
-      invariant(!Array.isArray(spec), 'update(): You provided an invalid spec to update(). The spec may ' + 'not contain an array except as the value of $set, $push, $unshift, ' + '$splice or any custom command allowing an array value.');
-    }
-
-    invariant(typeof spec === 'object' && spec !== null, 'update(): You provided an invalid spec to update(). The spec and ' + 'every included key path must be plain objects containing one of the ' + 'following commands: %s.', Object.keys(commands).join(', '));
-
-    var nextObject = object;
-    var specKeys = getAllKeys(spec);
-    var index, key;
-    for (index = 0; index < specKeys.length; index++) {
-      key = specKeys[index];
-      if (hasOwnProperty.call(commands, key)) {
-        nextObject = commands[key](spec[key], nextObject, spec, object);
-      } else {
-        var nextValueForKey = update(object[key], spec[key]);
-        if (nextValueForKey !== nextObject[key]) {
-          if (nextObject === object) {
-            nextObject = copy(object);
-          }
-          nextObject[key] = nextValueForKey;
-        }
-      }
-    }
-    return nextObject;
-  }
-}
-
-var defaultCommands = {
-  $push: function $push(value, original, spec) {
-    invariantPushAndUnshift(original, spec, '$push');
-    return original.concat(value);
-  },
-  $unshift: function $unshift(value, original, spec) {
-    invariantPushAndUnshift(original, spec, '$unshift');
-    return value.concat(original);
-  },
-  $splice: function $splice(value, nextObject, spec, object) {
-    var originalValue = nextObject === object ? copy(object) : nextObject;
-    invariantSplices(originalValue, spec);
-    value.forEach(function (args) {
-      invariantSplice(args);
-      splice.apply(originalValue, args);
-    });
-    return originalValue;
-  },
-  $set: function $set(value, original, spec) {
-    invariantSet(spec);
-    return value;
-  },
-  $unset: function $unset(value, nextObject, spec, object) {
-    invariant(Array.isArray(value), 'update(): expected spec of $unset to be an array; got %s. ' + 'Did you forget to wrap the key(s) in an array?', value);
-    var originalValue = nextObject;
-    for (var i = 0; i < value.length; i++) {
-      var key = value[i];
-      if (Object.hasOwnProperty.call(originalValue, key)) {
-        originalValue = nextObject === object ? copy(object) : nextObject;
-        delete originalValue[key];
-      }
-    }
-    return originalValue;
-  },
-  $merge: function $merge(value, nextObject, spec, object) {
-    var originalValue = nextObject === object ? copy(object) : nextObject;
-    invariantMerge(originalValue, value);
-    getAllKeys(value).forEach(function (key) {
-      originalValue[key] = value[key];
-    });
-    return originalValue;
-  },
-  $apply: function $apply(value, original) {
-    invariantApply(value);
-    return value(original);
-  }
-};
-
-module.exports = newContext();
-module.exports.newContext = newContext;
-
-function invariantPushAndUnshift(value, spec, command) {
-  invariant(Array.isArray(value), 'update(): expected target of %s to be an array; got %s.', command, value);
-  var specValue = spec[command];
-  invariant(Array.isArray(specValue), 'update(): expected spec of %s to be an array; got %s. ' + 'Did you forget to wrap your parameter in an array?', command, specValue);
-}
-
-function invariantSplices(value, spec) {
-  invariant(Array.isArray(value), 'Expected $splice target to be an array; got %s', value);
-  invariantSplice(spec['$splice']);
-}
-
-function invariantSplice(value) {
-  invariant(Array.isArray(value), 'update(): expected spec of $splice to be an array of arrays; got %s. ' + 'Did you forget to wrap your parameters in an array?', value);
-}
-
-function invariantApply(fn) {
-  invariant(typeof fn === 'function', 'update(): expected spec of $apply to be a function; got %s.', fn);
-}
-
-function invariantSet(spec) {
-  invariant(Object.keys(spec).length === 1, 'Cannot have more than one key in an object with $set');
-}
-
-function invariantMerge(target, specValue) {
-  invariant(specValue && typeof specValue === 'object', 'update(): $merge expects a spec of type \'object\'; got %s', specValue);
-  invariant(target && typeof target === 'object', 'update(): $merge expects a target of type \'object\'; got %s', target);
-}
-}, 528, null, "immutability-helper/index.js");
-__d(/* invariant/browser.js */function(global, require, module, exports) {
-
-'use strict';
-
-var invariant = function invariant(condition, format, a, b, c, d, e, f) {
-  if (process.env.NODE_ENV !== 'production') {
-    if (format === undefined) {
-      throw new Error('invariant requires an error message argument');
-    }
-  }
-
-  if (!condition) {
-    var error;
-    if (format === undefined) {
-      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(format.replace(/%s/g, function () {
-        return args[argIndex++];
-      }));
-      error.name = 'Invariant Violation';
-    }
-
-    error.framesToPop = 1;
-    throw error;
-  }
-};
-
-module.exports = invariant;
-}, 529, null, "invariant/browser.js");
+}, 530, null, "react-native-radio-buttons/lib/segmented-controls.js");
 __d(/* react-native-autocomplete-input/index.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -66533,18 +66219,18 @@ var styles = _reactNative.StyleSheet.create(babelHelpers.extends({
 })));
 
 exports.default = Autocomplete;
-}, 530, null, "react-native-autocomplete-input/index.js");
+}, 531, null, "react-native-autocomplete-input/index.js");
 __d(/* react-native-autogrow-textinput/index.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.AutoGrowingTextInput = undefined;
 
-var _AutoGrowingTextInput = require(532                         ); // 532 = ./src/AutoGrowingTextInput
+var _AutoGrowingTextInput = require(533                         ); // 533 = ./src/AutoGrowingTextInput
 
 var _AutoGrowingTextInput2 = babelHelpers.interopRequireDefault(_AutoGrowingTextInput);
 
 exports.AutoGrowingTextInput = _AutoGrowingTextInput2.default;
-}, 531, null, "react-native-autogrow-textinput/index.js");
+}, 532, null, "react-native-autogrow-textinput/index.js");
 __d(/* react-native-autogrow-textinput/src/AutoGrowingTextInput.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -66728,28 +66414,28 @@ AutoGrowingTextInput.defaultProps = {
   maxHeight: null,
   animation: { animated: false, duration: DEFAULT_ANIM_DURATION }
 };
-}, 532, null, "react-native-autogrow-textinput/src/AutoGrowingTextInput.js");
+}, 533, null, "react-native-autogrow-textinput/src/AutoGrowingTextInput.js");
 __d(/* react-native-keyboard-aware-scroll-view/index.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.KeyboardAwareListView = exports.KeyboardAwareScrollView = exports.KeyboardAwareMixin = undefined;
 
-var _KeyboardAwareMixin = require(534                       ); // 534 = ./lib/KeyboardAwareMixin
+var _KeyboardAwareMixin = require(535                       ); // 535 = ./lib/KeyboardAwareMixin
 
 var _KeyboardAwareMixin2 = babelHelpers.interopRequireDefault(_KeyboardAwareMixin);
 
-var _KeyboardAwareScrollView = require(535                            ); // 535 = ./lib/KeyboardAwareScrollView
+var _KeyboardAwareScrollView = require(536                            ); // 536 = ./lib/KeyboardAwareScrollView
 
 var _KeyboardAwareScrollView2 = babelHelpers.interopRequireDefault(_KeyboardAwareScrollView);
 
-var _KeyboardAwareListView = require(536                          ); // 536 = ./lib/KeyboardAwareListView
+var _KeyboardAwareListView = require(537                          ); // 537 = ./lib/KeyboardAwareListView
 
 var _KeyboardAwareListView2 = babelHelpers.interopRequireDefault(_KeyboardAwareListView);
 
 exports.KeyboardAwareMixin = _KeyboardAwareMixin2.default;
 exports.KeyboardAwareScrollView = _KeyboardAwareScrollView2.default;
 exports.KeyboardAwareListView = _KeyboardAwareListView2.default;
-}, 533, null, "react-native-keyboard-aware-scroll-view/index.js");
+}, 534, null, "react-native-keyboard-aware-scroll-view/index.js");
 __d(/* react-native-keyboard-aware-scroll-view/lib/KeyboardAwareMixin.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -66913,7 +66599,7 @@ var KeyboardAwareMixin = {
 };
 
 exports.default = KeyboardAwareMixin;
-}, 534, null, "react-native-keyboard-aware-scroll-view/lib/KeyboardAwareMixin.js");
+}, 535, null, "react-native-keyboard-aware-scroll-view/lib/KeyboardAwareMixin.js");
 __d(/* react-native-keyboard-aware-scroll-view/lib/KeyboardAwareScrollView.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -66924,7 +66610,7 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
 
 var _reactNative = require(46            ); // 46 = react-native
 
-var _KeyboardAwareMixin = require(534                   ); // 534 = ./KeyboardAwareMixin
+var _KeyboardAwareMixin = require(535                   ); // 535 = ./KeyboardAwareMixin
 
 var _KeyboardAwareMixin2 = babelHelpers.interopRequireDefault(_KeyboardAwareMixin);
 
@@ -66968,7 +66654,7 @@ var KeyboardAwareScrollView = _react2.default.createClass({
 });
 
 exports.default = KeyboardAwareScrollView;
-}, 535, null, "react-native-keyboard-aware-scroll-view/lib/KeyboardAwareScrollView.js");
+}, 536, null, "react-native-keyboard-aware-scroll-view/lib/KeyboardAwareScrollView.js");
 __d(/* react-native-keyboard-aware-scroll-view/lib/KeyboardAwareListView.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -66979,7 +66665,7 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
 
 var _reactNative = require(46            ); // 46 = react-native
 
-var _KeyboardAwareMixin = require(534                   ); // 534 = ./KeyboardAwareMixin
+var _KeyboardAwareMixin = require(535                   ); // 535 = ./KeyboardAwareMixin
 
 var _KeyboardAwareMixin2 = babelHelpers.interopRequireDefault(_KeyboardAwareMixin);
 
@@ -67019,7 +66705,7 @@ var KeyboardAwareListView = _react2.default.createClass({
 });
 
 exports.default = KeyboardAwareListView;
-}, 536, null, "react-native-keyboard-aware-scroll-view/lib/KeyboardAwareListView.js");
+}, 537, null, "react-native-keyboard-aware-scroll-view/lib/KeyboardAwareListView.js");
 __d(/* XLPAD/app/CaseDetails.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -67058,8 +66744,9 @@ var CaseDetails = function (_React$Component) {
             var data = this.props.navigation.state.params.data;
 
             var normalizedCase = {};
+
             for (var idx in data) {
-                if (data[idx] != null && data[idx] != '') {
+                if (data[idx] != 'undefined' && data[idx] != null && data[idx] != '' && data[idx] != []) {
                     if (idx == 'id') {
                         continue;
                     }
@@ -67101,12 +66788,12 @@ CaseDetails.navigationOptions = function (_ref) {
     var navigation = _ref.navigation,
         screenProps = _ref.screenProps;
     return {
-        title: navigation.state.params.data.name + "'s Case"
+        title: "Case " + navigation.state.params.data.id
     };
 };
 
 exports.default = CaseDetails;
-}, 537, null, "XLPAD/app/CaseDetails.js");
+}, 538, null, "XLPAD/app/CaseDetails.js");
 __d(/* XLPAD/app/Home.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -67131,15 +66818,15 @@ var _NewCase = require(503        ); // 503 = ./NewCase
 
 var _NewCase2 = babelHelpers.interopRequireDefault(_NewCase);
 
-var _CaseDetails = require(537            ); // 537 = ./CaseDetails
+var _CaseDetails = require(538            ); // 538 = ./CaseDetails
 
 var _CaseDetails2 = babelHelpers.interopRequireDefault(_CaseDetails);
 
 var _Case = require(504            ); // 504 = ./models/Case
 
-var _Complication = require(506                    ); // 506 = ./models/Complication
+var _Complication = require(511                    ); // 511 = ./models/Complication
 
-var arrowIcon = require(539                 ); // 539 = ./images/arrow.png
+var arrowIcon = require(540                 ); // 540 = ./images/arrow.png
 
 var Home = function (_React$Component) {
     babelHelpers.inherits(Home, _React$Component);
@@ -67154,30 +66841,38 @@ var Home = function (_React$Component) {
         value: function render() {
             var navigate = this.props.navigation.navigate;
 
-            var listItems = this.props.screenProps.patients.map(function (data, index) {
+            var listItems = this.props.screenProps.cases.map(function (data, index) {
                 return _react2.default.createElement(
                     _reactNative.TouchableOpacity,
                     { key: index,
                         onPress: function onPress() {
-                            return navigate('Cases', { data: data });
+                            return navigate('CaseDetails', { data: data });
                         },
                         style: index == 0 ? _Style2.default.firstListItem : _Style2.default.listItem
                     },
                     _react2.default.createElement(
-                        _reactNative.Text,
-                        { style: _Style2.default.listText,
-                            numberOfLines: 2,
-                            ellipsizeMode: 'tail'
-                        },
-                        data.name
+                        _reactNative.View,
+                        { style: { flexDirection: 'row' } },
+                        _react2.default.createElement(
+                            _reactNative.Text,
+                            { style: _Style2.default.id },
+                            data.id + ". "
+                        ),
+                        _react2.default.createElement(
+                            _reactNative.Text,
+                            { style: _Style2.default.listText,
+                                numberOfLines: 2,
+                                ellipsizeMode: 'tail' },
+                            data.targets
+                        )
                     ),
                     _react2.default.createElement(
                         _reactNative.View,
-                        { style: _Style2.default.row },
+                        { style: _Style2.default.dateLabel },
                         _react2.default.createElement(
                             _reactNative.Text,
                             { style: _Style2.default.listItemDate },
-                            Date(data.dataTimeUpdated).split(' ').slice(0, 3).join(' ')
+                            data.dateOfProcedure
                         ),
                         _react2.default.createElement(_reactNative.Image, {
                             style: _Style2.default.icon,
@@ -67201,12 +66896,12 @@ var Home = function (_React$Component) {
 }(_react2.default.Component);
 
 Home.navigationOptions = {
-    title: 'Your Patients'
+    title: 'Your Cases'
 };
 exports.default = Home;
-}, 538, null, "XLPAD/app/Home.js");
+}, 539, null, "XLPAD/app/Home.js");
 __d(/* XLPAD/app/images/arrow.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/app/images","width":200,"height":200,"scales":[1],"hash":"a721a9503f0c2dc2cbd2f2eea8fc55bf","name":"arrow","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
-}, 539, null, "XLPAD/app/images/arrow.png");
+}, 540, null, "XLPAD/app/images/arrow.png");
 __d(/* XLPAD/app/Cases.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -67221,7 +66916,7 @@ var _Style = require(502      ); // 502 = ./Style
 
 var _Style2 = babelHelpers.interopRequireDefault(_Style);
 
-var arrowIcon = require(539                 ); // 539 = ./images/arrow.png
+var arrowIcon = require(540                 ); // 540 = ./images/arrow.png
 
 var CaseDetails = function (_React$Component) {
     babelHelpers.inherits(CaseDetails, _React$Component);
@@ -67291,7 +66986,7 @@ CaseDetails.navigationOptions = function (_ref) {
 };
 
 exports.default = CaseDetails;
-}, 540, null, "XLPAD/app/Cases.js");
+}, 541, null, "XLPAD/app/Cases.js");
 __d(/* XLPAD/app/FindCase.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -67308,11 +67003,11 @@ var _Style2 = babelHelpers.interopRequireDefault(_Style);
 
 var _utilities = require(513          ); // 513 = ./utilities
 
-var _reactNativeAutocompleteInput = require(530                              ); // 530 = react-native-autocomplete-input
+var _reactNativeAutocompleteInput = require(531                              ); // 531 = react-native-autocomplete-input
 
 var _reactNativeAutocompleteInput2 = babelHelpers.interopRequireDefault(_reactNativeAutocompleteInput);
 
-var arrowIcon = require(539                 ); // 539 = ./images/arrow.png
+var arrowIcon = require(540                 ); // 540 = ./images/arrow.png
 
 var FindCase = function (_React$Component) {
     babelHelpers.inherits(FindCase, _React$Component);
@@ -67324,8 +67019,7 @@ var FindCase = function (_React$Component) {
 
         _this.state = {
             patients: (0, _utilities.getPatients)(),
-            matchingNames: [],
-            name: '',
+            id: '',
             targetVessel: '',
             vessels: ['Common Iliac', 'External Iliac', 'Common Femoral', 'Femoral Popliteal', 'BTK'],
             matchingVessels: []
@@ -67337,10 +67031,10 @@ var FindCase = function (_React$Component) {
         key: 'componentWillUpdate',
         value: function componentWillUpdate(nextProps, nextState) {
             this.resultsDisplay = null;
-            if (nextState.name != '' || nextState.targetVessel != '') {
+            if (nextState.id != '' || nextState.targetVessel != '') {
                 var navigate = this.props.navigation.navigate;
 
-                var cases = (0, _utilities.getCases)(nextState.name, nextState.targetVessel);
+                var cases = (0, _utilities.getCases)(nextState.id, nextState.targetVessel);
 
                 this.resultsDisplay = Object.keys(cases).map(function (c, index) {
                     return _react2.default.createElement(
@@ -67349,56 +67043,40 @@ var FindCase = function (_React$Component) {
                             onPress: function onPress() {
                                 return navigate('CaseDetails', { data: cases[index] });
                             },
-                            style: index == 0 ? _Style2.default.firstListItemSearch : _Style2.default.listItemSearch
+                            style: index == 0 ? _Style2.default.firstListItem : _Style2.default.listItem
                         },
                         _react2.default.createElement(
-                            _reactNative.Text,
-                            { style: _Style2.default.listText,
-                                numberOfLines: 2,
-                                ellipsizeMode: 'tail'
-                            },
-                            cases[index].targets
-                        ),
-                        _react2.default.createElement(
                             _reactNative.View,
-                            { style: _Style2.default.column },
+                            { style: { flexDirection: 'row' } },
                             _react2.default.createElement(
-                                _reactNative.View,
-                                { style: _Style2.default.row },
-                                _react2.default.createElement(
-                                    _reactNative.Text,
-                                    { style: _Style2.default.listItemDate },
-                                    cases[index].dateOfProcedure
-                                ),
-                                _react2.default.createElement(_reactNative.Image, {
-                                    style: _Style2.default.icon,
-                                    source: arrowIcon
-                                })
+                                _reactNative.Text,
+                                { style: _Style2.default.id },
+                                cases[index].id + ". "
                             ),
                             _react2.default.createElement(
                                 _reactNative.Text,
-                                { style: _Style2.default.name, ellipsizeMode: 'tail', numberOfLines: 1 },
-                                cases[index].name
+                                { style: _Style2.default.listText,
+                                    numberOfLines: 2,
+                                    ellipsizeMode: 'tail' },
+                                cases[index].targets
                             )
+                        ),
+                        _react2.default.createElement(
+                            _reactNative.View,
+                            { style: _Style2.default.dateLabel },
+                            _react2.default.createElement(
+                                _reactNative.Text,
+                                { style: _Style2.default.listItemDate },
+                                cases[index].dateOfProcedure
+                            ),
+                            _react2.default.createElement(_reactNative.Image, {
+                                style: _Style2.default.icon,
+                                source: arrowIcon
+                            })
                         )
                     );
                 });
             }
-        }
-    }, {
-        key: 'getMatches',
-        value: function getMatches(query, src) {
-            var matches = [];
-            if (query != '') {
-                query = query.toLowerCase();
-                for (var i in src) {
-                    var name = src[i].toLowerCase();
-                    if (name.includes(query)) {
-                        matches.push(src[i]);
-                    }
-                }
-            }
-            return matches;
         }
     }, {
         key: 'render',
@@ -67411,58 +67089,26 @@ var FindCase = function (_React$Component) {
                 _react2.default.createElement(
                     _reactNative.Text,
                     { style: _Style2.default.inputHeader },
-                    'Patient Name'
+                    'Case Number'
                 ),
-                _react2.default.createElement(_reactNativeAutocompleteInput2.default, {
-                    data: this.state.matchingNames,
-                    value: this.state.name,
+                _react2.default.createElement(_reactNative.TextInput, {
+                    style: _Style2.default.input,
+                    value: this.state.id,
                     onChangeText: function onChangeText(text) {
-                        matches = _this2.getMatches(text, _this2.state.patients);
-                        _this2.setState({ matchingNames: [], name: text });
+                        _this2.setState({ id: text });
                     },
-                    renderItem: function renderItem(data) {
-                        return _react2.default.createElement(
-                            _reactNative.TouchableOpacity,
-                            {
-                                style: { height: 40 },
-                                onPress: function onPress() {
-                                    _this2.setState({ name: data, matchingNames: [] });
-                                } },
-                            _react2.default.createElement(
-                                _reactNative.Text,
-                                null,
-                                data
-                            )
-                        );
-                    }
+                    keyboardType: 'numbers-and-punctuation'
                 }),
                 _react2.default.createElement(
                     _reactNative.Text,
                     { style: _Style2.default.inputHeader },
                     'Target Vessel'
                 ),
-                _react2.default.createElement(_reactNativeAutocompleteInput2.default, {
-                    data: this.state.matchingVessels,
+                _react2.default.createElement(_reactNative.TextInput, {
+                    style: _Style2.default.input,
                     value: this.state.targetVessel,
-                    listStyle: { position: 'absolute' },
                     onChangeText: function onChangeText(text) {
-                        matches = _this2.getMatches(text, _this2.state.vessels);
-                        _this2.setState({ matchingVessels: [], targetVessel: text });
-                    },
-                    renderItem: function renderItem(data) {
-                        return _react2.default.createElement(
-                            _reactNative.TouchableOpacity,
-                            {
-                                style: { height: 40 },
-                                onPress: function onPress() {
-                                    _this2.setState({ targetVessel: data, matchingVessels: [] });
-                                } },
-                            _react2.default.createElement(
-                                _reactNative.Text,
-                                null,
-                                data
-                            )
-                        );
+                        _this2.setState({ targetVessel: text });
                     }
                 }),
                 _react2.default.createElement(
@@ -67485,7 +67131,7 @@ FindCase.navigationOptions = {
     title: 'Search'
 };
 exports.default = FindCase;
-}, 541, null, "XLPAD/app/FindCase.js");
+}, 542, null, "XLPAD/app/FindCase.js");
 ;require(97);
 ;require(0);
 //# sourceMappingURL=index.ios.map

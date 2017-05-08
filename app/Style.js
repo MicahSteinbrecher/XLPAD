@@ -16,6 +16,7 @@ var Styles = StyleSheet.create({
         borderColor: '#d6d7da',
     },
     input: {
+        backgroundColor:"white",
         height: 40,
         borderColor: '#b9b9b9',
         borderRadius: 1,
@@ -44,7 +45,6 @@ var Styles = StyleSheet.create({
         minHeight: 60,
         borderColor: 'gray',
         borderBottomWidth: 1,
-        alignItems: 'center',
     },
     firstListItem: {
         width: screenWidth,
@@ -54,7 +54,6 @@ var Styles = StyleSheet.create({
         borderColor: 'gray',
         borderBottomWidth: 1,
         borderTopWidth: 1,
-        alignItems: 'center',
     },
     listItemSearch: {
         width: screenWidth,
@@ -90,13 +89,13 @@ var Styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderTopWidth: 1
     },
-    row: {
+    dateLabel: {
         flexDirection: 'row',
+        position: 'absolute',
+        left: screenWidth*.65,
     },
     column: {
         flexDirection: 'column',
-        position: 'absolute',
-        left: screenWidth*.65,
     },
     listItemDate: {
         marginRight: 10,
@@ -119,9 +118,9 @@ var Styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10
     },
-    name: {
-        marginTop: 10,
-        fontWeight: 'bold',
+    id: {
+        fontSize: 16,
+        fontWeight: 'bold'
     }
 });
 

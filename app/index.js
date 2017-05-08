@@ -56,10 +56,10 @@ class XLPAD extends React.Component {
     constructor(props) {
         super(props);
         this.realm = new Realm({schema: [Case, Procedure, Complication, Patient, Institution]});
-        var data = this.realm.objects('Patient').sorted('dateTimeUpdated', true);
-        var patients = data.map(x => Object.assign({}, x));
+        var data = this.realm.objects('Case').sorted('dateTimeCreated', true).slice();
+        var cases = data.map(x => Object.assign({}, x));
         this.state = {
-            patients: patients,
+            cases: cases,
         }
         this.onNavigationStateChange = this.onNavigationStateChange.bind(this);
     }
@@ -68,10 +68,10 @@ class XLPAD extends React.Component {
         console.log(currentState);
         console.log(currentState.index);
         if ( (currentState.index) == 0 && (prevState.index == 0) && (currentState.routes[0].index == 0) ) {
-            var data = this.realm.objects('Patient').sorted('dateTimeUpdated', true);
-            var patients = data.map(x => Object.assign({}, x));
+            var data = this.realm.objects('Case').sorted('dateTimeCreated', true).slice();
+            var cases = data.map(x => Object.assign({}, x));
             this.setState({
-                patients: patients,
+                cases: cases,
             });
         }
     }
