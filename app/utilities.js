@@ -94,37 +94,44 @@ export function getTargets(procedures){
     }
 }
 
-export function getCases(id, targetVessel){
+export function getCases(vessel, intervention){
     var cases = realm.objects('Case').slice();
     var result = []
-    if (id != '' && targetVessel != ''){
+    if (vessel != '' && intervention != ''){
         for (var i in cases){
-            if ( cases[i].id.includes(id) &&
-                cases[i].targets.toLowerCase().includes(targetVessel.toLowerCase()) ){
-                result.push(cases[i])
+            if (cases[i].targets.toLowerCase().includes(vessel.toLowerCase()) ){
+                for (var j in cases[i].procedures){
+                    if (cases[i].procedures[j].interventions.includes(intervention)){
+                        result.push(cases[i])
+                        break;
+                    }
+                }
             }
         }
         return result.map(x => Object.assign({}, x));
     }
 
-    if (id != ''){
+    if (vessel != ''){
         for (var i in cases){
-            if (cases[i].id.includes(id)){
+            if (cases[i].targets.toLowerCase().includes(vessel.toLowerCase())){
                 result.push(cases[i])
+            }
+        }
+        return result.map(x => Object.assign({}, x));
+    }
+    if (intervention != ''){
+        for (var i in cases){
+            for (var j in cases[i].procedures){
+                if (cases[i].procedures[j].interventions.includes(intervention)){
+                    result.push(cases[i])
+                    break;
+                }
             }
         }
         return result.map(x => Object.assign({}, x));
     }
 
-    if (targetVessel != ''){
-        for (var i in cases){
-            if (cases[i].targets.toLowerCase().includes(targetVessel.toLowerCase())){
-                result.push(cases[i])
-            }
-        }
-        return result.map(x => Object.assign({}, x));
-    }
-    return null
+    return []
 }
 
 export function splitVar(str) {
@@ -149,7 +156,7 @@ function caseToString(obj) {
     var result = '';
 
     for (var i in obj) {
-        result += 'Leg: ' + obj[i].leg + '\n' + 'Target Vessel: ' + obj[i].targetVessel + '\n' + 'CTO: ' + obj[i].isCTO;
+        result += 'Leg: ' + obj[i].leg + '\n' + 'Target Vessel: ' + obj[i].targetVessel + '\n' + 'Interventions: ' + obj[i].interventions + '\n' + 'CTO: ' + obj[i].isCTO;
         if (!obj[i].isCTO) {
             result += '\n' + 'Stenosis Percentage: ' + obj[i].stenosisPercentage;
         }

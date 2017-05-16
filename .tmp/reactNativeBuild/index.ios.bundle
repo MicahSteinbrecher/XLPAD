@@ -64662,7 +64662,9 @@ function getCases(id, targetVessel) {
                 result.push(cases[i]);
             }
         }
-        return result;
+        return result.map(function (x) {
+            return babelHelpers.extends({}, x);
+        });
     }
 
     if (id != '') {
@@ -64671,7 +64673,9 @@ function getCases(id, targetVessel) {
                 result.push(cases[i]);
             }
         }
-        return result;
+        return result.map(function (x) {
+            return babelHelpers.extends({}, x);
+        });
     }
 
     if (targetVessel != '') {
@@ -64680,7 +64684,9 @@ function getCases(id, targetVessel) {
                 result.push(cases[i]);
             }
         }
-        return result;
+        return result.map(function (x) {
+            return babelHelpers.extends({}, x);
+        });
     }
     return null;
 }
@@ -65342,7 +65348,6 @@ var ProcedureComponent = function (_React$Component) {
                 'Common Femoral': false,
                 'Femroal Popliteal': false,
                 'BTK': false
-
             }
         });
         _this.state.procedure.leg = _this.props.leg;
@@ -66744,7 +66749,7 @@ var CaseDetails = function (_React$Component) {
             var data = this.props.navigation.state.params.data;
 
             var normalizedCase = {};
-
+            data.procedures = data.procedures.slice();
             for (var idx in data) {
                 if (data[idx] != 'undefined' && data[idx] != null && data[idx] != '' && data[idx] != []) {
                     if (idx == 'id') {
@@ -67007,6 +67012,10 @@ var _reactNativeAutocompleteInput = require(531                              ); 
 
 var _reactNativeAutocompleteInput2 = babelHelpers.interopRequireDefault(_reactNativeAutocompleteInput);
 
+var _reactNativeCheckbox = require(525                    ); // 525 = react-native-checkbox
+
+var _reactNativeCheckbox2 = babelHelpers.interopRequireDefault(_reactNativeCheckbox);
+
 var arrowIcon = require(540                 ); // 540 = ./images/arrow.png
 
 var FindCase = function (_React$Component) {
@@ -67022,7 +67031,7 @@ var FindCase = function (_React$Component) {
             id: '',
             targetVessel: '',
             vessels: ['Common Iliac', 'External Iliac', 'Common Femoral', 'Femoral Popliteal', 'BTK'],
-            matchingVessels: []
+            interventions: [{ type: 'PTA', active: false }, { type: 'Scoring Balloon', active: false }, { type: 'Atherectomy', active: false }, { type: 'Scoring Balloon', active: false }, { type: 'DCB', active: false }, { type: 'BMS', active: false }, { type: 'DES', active: false }, { type: 'Supera', active: false }]
         };
         return _this;
     }
@@ -67083,6 +67092,17 @@ var FindCase = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
+            var interventionsDisplay = this.state.interventions.map(function (intervention, index) {
+                return _react2.default.createElement(_reactNativeCheckbox2.default, {
+                    checked: intervention.active,
+                    key: index,
+                    onChange: function onChange() {
+                        return _this2.onInterventionsChange(index);
+                    },
+                    label: intervention.type
+                });
+            });
+
             return _react2.default.createElement(
                 _reactNative.View,
                 null,
@@ -67111,6 +67131,12 @@ var FindCase = function (_React$Component) {
                         _this2.setState({ targetVessel: text });
                     }
                 }),
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    { style: _Style2.default.inputHeader },
+                    'Interventions'
+                ),
+                interventionsDisplay,
                 _react2.default.createElement(
                     _reactNative.Text,
                     { style: _Style2.default.inputHeader },
