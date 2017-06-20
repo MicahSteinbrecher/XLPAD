@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
     AppRegistry,
@@ -13,6 +12,7 @@ import {
 import { TabNavigator, StackNavigator } from "react-navigation";
 import Realm from 'realm';
 import Styles from './Style';
+import Copyright from './Copyright';
 import NewCase from './NewCase';
 import CaseDetails from './CaseDetails';
 import Home from './Home';
@@ -23,6 +23,7 @@ import { Complication } from './models/Complication';
 import { Procedure } from './models/Procedure';
 import { Patient } from './models/Patient';
 import { Institution } from './models/Institution';
+
 
 import ProcedureComponent from './Procedure'
 
@@ -45,8 +46,8 @@ const HomeScreen = TabNavigator({
 
     });
 
-
 const MainScreenNavigator = StackNavigator({
+    Copyright: { screen: Copyright},
     Home: { screen: HomeScreen },
     Cases: { screen: Cases},
     CaseDetails: { screen: CaseDetails }
@@ -67,7 +68,7 @@ class XLPAD extends React.Component {
     onNavigationStateChange(prevState, currentState){
         console.log(currentState);
         console.log(currentState.index);
-        if ( (currentState.index) == 0 && (prevState.index == 0) && (currentState.routes[0].index == 0) ) {
+        if ( (currentState.index) == 1 && (prevState.index == 1) && (currentState.routes[1].index == 0) ) {
             var data = this.realm.objects('Case').sorted('dateTimeCreated', true).slice();
             var cases = data.map(x => Object.assign({}, x));
             this.setState({

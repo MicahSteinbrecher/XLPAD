@@ -1247,6 +1247,10 @@ var _Style = require(502      ); // 502 = ./Style
 
 var _Style2 = babelHelpers.interopRequireDefault(_Style);
 
+var _Copyright = require(543          ); // 543 = ./Copyright
+
+var _Copyright2 = babelHelpers.interopRequireDefault(_Copyright);
+
 var _NewCase = require(503        ); // 503 = ./NewCase
 
 var _NewCase2 = babelHelpers.interopRequireDefault(_NewCase);
@@ -1300,6 +1304,7 @@ var HomeScreen = (0, _reactNavigation.TabNavigator)({
 });
 
 var MainScreenNavigator = (0, _reactNavigation.StackNavigator)({
+    Copyright: { screen: _Copyright2.default },
     Home: { screen: HomeScreen },
     Cases: { screen: _Cases2.default },
     CaseDetails: { screen: _CaseDetails2.default }
@@ -59536,6 +59541,203 @@ var Styles = _reactNative.StyleSheet.create({
 
 exports.default = Styles;
 }, 502, null, "XLPAD/app/Style.js");
+__d(/* XLPAD/app/Copyright.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(13     ); // 13 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(46            ); // 46 = react-native
+
+var _Style = require(502      ); // 502 = ./Style
+
+var _Style2 = babelHelpers.interopRequireDefault(_Style);
+
+var _reactNativeCheckBox = require(521                     ); // 521 = react-native-check-box
+
+var _reactNativeCheckBox2 = babelHelpers.interopRequireDefault(_reactNativeCheckBox);
+
+var Copyright = function (_React$Component) {
+    babelHelpers.inherits(Copyright, _React$Component);
+
+    function Copyright() {
+        babelHelpers.classCallCheck(this, Copyright);
+        return babelHelpers.possibleConstructorReturn(this, (Copyright.__proto__ || Object.getPrototypeOf(Copyright)).apply(this, arguments));
+    }
+
+    babelHelpers.createClass(Copyright, [{
+        key: 'render',
+        value: function render() {
+            var navigate = this.props.navigation.navigate;
+
+            return _react2.default.createElement(
+                _reactNative.ScrollView,
+                null,
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    { style: { fontSize: 18 } },
+                    'a.\xA0\xA0\xA0\xA0\xA0Copyright \xA92017, The University of Texas Southwestern Medical Center.\xA0 All rights reserved;',
+                    "\n",
+                    'b.\xA0\xA0\xA0\xA0This software and any related documentation constitutes published and/or unpublished works and may contain valuable trade secrets and proprietary information belonging to The University of Texas Southwestern Medical Center (UT SOUTHWESTERN).\xA0 None of the foregoing material may be copied, duplicated or disclosed without the express written permission of UT SOUTHWESTERN.\xA0 IN NO EVENT SHALL UT SOUTHWESTERN BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF UT SOUTHWESTERN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\xA0 UT SOUTHWESTERN SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE AND ACCOMPANYING DOCUMENTATION, IF ANY, PROVIDED HEREUNDER IS PROVIDED "AS IS". UT SOUTHWESTERN HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.',
+                    "\n",
+                    'c.\xA0\xA0\xA0 This software contains copyrighted materials protected under BSD, Apache 2.0, and MIT open source licenses.\xA0 Corresponding terms and conditions apply.'
+                ),
+                _react2.default.createElement(_reactNativeCheckBox2.default, {
+                    style: { paddingRight: 10, paddingTop: 30 },
+                    onClick: function onClick() {
+                        return navigate('Home');
+                    },
+                    leftText: 'I agree to the terms and conditions',
+                    leftTextStyle: { fontSize: 16, fontWeight: 'bold' }
+                })
+            );
+        }
+    }]);
+    return Copyright;
+}(_react2.default.Component);
+
+Copyright.navigationOptions = {
+    title: 'Copyright Notice'
+};
+exports.default = Copyright;
+}, 543, null, "XLPAD/app/Copyright.js");
+__d(/* react-native-check-box/index.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(13     ); // 13 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(46            ); // 46 = react-native
+
+var CheckBox = function (_Component) {
+    babelHelpers.inherits(CheckBox, _Component);
+
+    function CheckBox(props) {
+        babelHelpers.classCallCheck(this, CheckBox);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (CheckBox.__proto__ || Object.getPrototypeOf(CheckBox)).call(this, props));
+
+        _this.state = {
+            isChecked: _this.props.isChecked
+        };
+        return _this;
+    }
+
+    babelHelpers.createClass(CheckBox, [{
+        key: '_renderLeft',
+        value: function _renderLeft() {
+            if (this.props.leftTextView) return this.props.leftTextView;
+            if (!this.props.leftText) return null;
+            return _react2.default.createElement(
+                _reactNative.Text,
+                { style: [styles.leftText, this.props.leftTextStyle] },
+                this.props.leftText
+            );
+        }
+    }, {
+        key: '_renderRight',
+        value: function _renderRight() {
+            if (this.props.rightTextView) return this.props.rightTextView;
+            if (!this.props.rightText) return null;
+            return _react2.default.createElement(
+                _reactNative.Text,
+                { style: [styles.rightText, this.props.rightTextStyle] },
+                this.props.rightText
+            );
+        }
+    }, {
+        key: '_renderImage',
+        value: function _renderImage() {
+            if (this.state.isChecked) {
+                return this.props.checkedImage ? this.props.checkedImage : this.genCheckedImage();
+            } else {
+                return this.props.unCheckedImage ? this.props.unCheckedImage : this.genCheckedImage();
+            }
+        }
+    }, {
+        key: 'genCheckedImage',
+        value: function genCheckedImage() {
+            var source = this.state.isChecked ? require(522                     ) : require(523                                   ); // 523 = ./img/ic_check_box_outline_blank.png // 522 = ./img/ic_check_box.png
+
+            return _react2.default.createElement(_reactNative.Image, { source: source });
+        }
+    }, {
+        key: 'onClick',
+        value: function onClick() {
+            this.setState({
+                isChecked: !this.state.isChecked
+            });
+            this.props.onClick();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _reactNative.TouchableHighlight,
+                {
+                    style: this.props.style,
+                    onPress: function onPress() {
+                        return _this2.onClick();
+                    },
+                    underlayColor: 'transparent'
+                },
+                _react2.default.createElement(
+                    _reactNative.View,
+                    { style: styles.container },
+                    this._renderLeft(),
+                    this._renderImage(),
+                    this._renderRight()
+                )
+            );
+        }
+    }]);
+    return CheckBox;
+}(_react.Component);
+
+CheckBox.propTypes = babelHelpers.extends({}, _reactNative.View.propTypes, {
+    leftText: _react2.default.PropTypes.string,
+    leftTextView: _react2.default.PropTypes.element,
+    rightText: _react2.default.PropTypes.string,
+    leftTextStyle: _reactNative.Text.propTypes.style,
+    rightTextView: _react2.default.PropTypes.element,
+    rightTextStyle: _reactNative.Text.propTypes.style,
+    checkedImage: _react2.default.PropTypes.element,
+    unCheckedImage: _react2.default.PropTypes.element,
+    onClick: _react2.default.PropTypes.func.isRequired,
+    isChecked: _react2.default.PropTypes.bool
+
+});
+CheckBox.defaultProps = {
+    isChecked: false,
+    leftTextStyle: {},
+    rightTextStyle: {}
+};
+exports.default = CheckBox;
+
+var styles = _reactNative.StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    leftText: {
+        flex: 1
+    },
+    rightText: {
+        flex: 1,
+        marginLeft: 10
+    }
+});
+}, 521, null, "react-native-check-box/index.js");
+__d(/* react-native-check-box/img/ic_check_box.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/node_modules/react-native-check-box/img","width":24,"height":24,"scales":[1,2,3],"hash":"5d3b135d5214e780d63b968d2ade7240","name":"ic_check_box","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
+}, 522, null, "react-native-check-box/img/ic_check_box.png");
+__d(/* react-native-check-box/img/ic_check_box_outline_blank.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/node_modules/react-native-check-box/img","width":24,"height":24,"scales":[1,2,3],"hash":"a254967b747795d2bc7217850e45291a","name":"ic_check_box_outline_blank","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
+}, 523, null, "react-native-check-box/img/ic_check_box_outline_blank.png");
 __d(/* XLPAD/app/NewCase.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -64653,13 +64855,18 @@ function getTargets(procedures) {
     }
 }
 
-function getCases(id, targetVessel) {
+function getCases(vessel, intervention) {
     var cases = realm.objects('Case').slice();
     var result = [];
-    if (id != '' && targetVessel != '') {
+    if (vessel != '' && intervention != '') {
         for (var i in cases) {
-            if (cases[i].id.includes(id) && cases[i].targets.toLowerCase().includes(targetVessel.toLowerCase())) {
-                result.push(cases[i]);
+            if (cases[i].targets.toLowerCase().includes(vessel.toLowerCase())) {
+                for (var j in cases[i].procedures) {
+                    if (cases[i].procedures[j].interventions.includes(intervention)) {
+                        result.push(cases[i]);
+                        break;
+                    }
+                }
             }
         }
         return result.map(function (x) {
@@ -64667,10 +64874,23 @@ function getCases(id, targetVessel) {
         });
     }
 
-    if (id != '') {
+    if (vessel != '') {
         for (var i in cases) {
-            if (cases[i].id.includes(id)) {
+            if (cases[i].targets.toLowerCase().includes(vessel.toLowerCase())) {
                 result.push(cases[i]);
+            }
+        }
+        return result.map(function (x) {
+            return babelHelpers.extends({}, x);
+        });
+    }
+    if (intervention != '') {
+        for (var i in cases) {
+            for (var j in cases[i].procedures) {
+                if (cases[i].procedures[j].interventions.includes(intervention)) {
+                    result.push(cases[i]);
+                    break;
+                }
             }
         }
         return result.map(function (x) {
@@ -64678,17 +64898,7 @@ function getCases(id, targetVessel) {
         });
     }
 
-    if (targetVessel != '') {
-        for (var i in cases) {
-            if (cases[i].targets.toLowerCase().includes(targetVessel.toLowerCase())) {
-                result.push(cases[i]);
-            }
-        }
-        return result.map(function (x) {
-            return babelHelpers.extends({}, x);
-        });
-    }
-    return null;
+    return [];
 }
 
 function splitVar(str) {
@@ -64713,7 +64923,7 @@ function caseToString(obj) {
     var result = '';
 
     for (var i in obj) {
-        result += 'Leg: ' + obj[i].leg + '\n' + 'Target Vessel: ' + obj[i].targetVessel + '\n' + 'CTO: ' + obj[i].isCTO;
+        result += 'Leg: ' + obj[i].leg + '\n' + 'Target Vessel: ' + obj[i].targetVessel + '\n' + 'Interventions: ' + obj[i].interventions + '\n' + 'CTO: ' + obj[i].isCTO;
         if (!obj[i].isCTO) {
             result += '\n' + 'Stenosis Percentage: ' + obj[i].stenosisPercentage;
         }
@@ -65177,141 +65387,6 @@ var ProceduresContainer = function (_React$Component) {
 
 exports.default = ProceduresContainer;
 }, 520, null, "XLPAD/app/ProceduresContainer.js");
-__d(/* react-native-check-box/index.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = require(13     ); // 13 = react
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _reactNative = require(46            ); // 46 = react-native
-
-var CheckBox = function (_Component) {
-    babelHelpers.inherits(CheckBox, _Component);
-
-    function CheckBox(props) {
-        babelHelpers.classCallCheck(this, CheckBox);
-
-        var _this = babelHelpers.possibleConstructorReturn(this, (CheckBox.__proto__ || Object.getPrototypeOf(CheckBox)).call(this, props));
-
-        _this.state = {
-            isChecked: _this.props.isChecked
-        };
-        return _this;
-    }
-
-    babelHelpers.createClass(CheckBox, [{
-        key: '_renderLeft',
-        value: function _renderLeft() {
-            if (this.props.leftTextView) return this.props.leftTextView;
-            if (!this.props.leftText) return null;
-            return _react2.default.createElement(
-                _reactNative.Text,
-                { style: [styles.leftText, this.props.leftTextStyle] },
-                this.props.leftText
-            );
-        }
-    }, {
-        key: '_renderRight',
-        value: function _renderRight() {
-            if (this.props.rightTextView) return this.props.rightTextView;
-            if (!this.props.rightText) return null;
-            return _react2.default.createElement(
-                _reactNative.Text,
-                { style: [styles.rightText, this.props.rightTextStyle] },
-                this.props.rightText
-            );
-        }
-    }, {
-        key: '_renderImage',
-        value: function _renderImage() {
-            if (this.state.isChecked) {
-                return this.props.checkedImage ? this.props.checkedImage : this.genCheckedImage();
-            } else {
-                return this.props.unCheckedImage ? this.props.unCheckedImage : this.genCheckedImage();
-            }
-        }
-    }, {
-        key: 'genCheckedImage',
-        value: function genCheckedImage() {
-            var source = this.state.isChecked ? require(522                     ) : require(523                                   ); // 523 = ./img/ic_check_box_outline_blank.png // 522 = ./img/ic_check_box.png
-
-            return _react2.default.createElement(_reactNative.Image, { source: source });
-        }
-    }, {
-        key: 'onClick',
-        value: function onClick() {
-            this.setState({
-                isChecked: !this.state.isChecked
-            });
-            this.props.onClick();
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            return _react2.default.createElement(
-                _reactNative.TouchableHighlight,
-                {
-                    style: this.props.style,
-                    onPress: function onPress() {
-                        return _this2.onClick();
-                    },
-                    underlayColor: 'transparent'
-                },
-                _react2.default.createElement(
-                    _reactNative.View,
-                    { style: styles.container },
-                    this._renderLeft(),
-                    this._renderImage(),
-                    this._renderRight()
-                )
-            );
-        }
-    }]);
-    return CheckBox;
-}(_react.Component);
-
-CheckBox.propTypes = babelHelpers.extends({}, _reactNative.View.propTypes, {
-    leftText: _react2.default.PropTypes.string,
-    leftTextView: _react2.default.PropTypes.element,
-    rightText: _react2.default.PropTypes.string,
-    leftTextStyle: _reactNative.Text.propTypes.style,
-    rightTextView: _react2.default.PropTypes.element,
-    rightTextStyle: _reactNative.Text.propTypes.style,
-    checkedImage: _react2.default.PropTypes.element,
-    unCheckedImage: _react2.default.PropTypes.element,
-    onClick: _react2.default.PropTypes.func.isRequired,
-    isChecked: _react2.default.PropTypes.bool
-
-});
-CheckBox.defaultProps = {
-    isChecked: false,
-    leftTextStyle: {},
-    rightTextStyle: {}
-};
-exports.default = CheckBox;
-
-var styles = _reactNative.StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    leftText: {
-        flex: 1
-    },
-    rightText: {
-        flex: 1,
-        marginLeft: 10
-    }
-});
-}, 521, null, "react-native-check-box/index.js");
-__d(/* react-native-check-box/img/ic_check_box.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/node_modules/react-native-check-box/img","width":24,"height":24,"scales":[1,2,3],"hash":"5d3b135d5214e780d63b968d2ade7240","name":"ic_check_box","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
-}, 522, null, "react-native-check-box/img/ic_check_box.png");
-__d(/* react-native-check-box/img/ic_check_box_outline_blank.png */function(global, require, module, exports) {module.exports = require(240                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/node_modules/react-native-check-box/img","width":24,"height":24,"scales":[1,2,3],"hash":"a254967b747795d2bc7217850e45291a","name":"ic_check_box_outline_blank","type":"png"}); // 240 = react-native/Libraries/Image/AssetRegistry
-}, 523, null, "react-native-check-box/img/ic_check_box_outline_blank.png");
 __d(/* XLPAD/app/Procedure.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -65348,6 +65423,7 @@ var ProcedureComponent = function (_React$Component) {
                 'Common Femoral': false,
                 'Femroal Popliteal': false,
                 'BTK': false
+
             }
         });
         _this.state.procedure.leg = _this.props.leg;
@@ -67029,9 +67105,25 @@ var FindCase = function (_React$Component) {
         _this.state = {
             patients: (0, _utilities.getPatients)(),
             id: '',
-            targetVessel: '',
-            vessels: ['Common Iliac', 'External Iliac', 'Common Femoral', 'Femoral Popliteal', 'BTK'],
-            interventions: [{ type: 'PTA', active: false }, { type: 'Scoring Balloon', active: false }, { type: 'Atherectomy', active: false }, { type: 'Scoring Balloon', active: false }, { type: 'DCB', active: false }, { type: 'BMS', active: false }, { type: 'DES', active: false }, { type: 'Supera', active: false }]
+            vessels: {
+                'Common Iliac': false,
+                'External Iliac': false,
+                'Common Femoral': false,
+                'Femroal Popliteal': false,
+                'BTK': false
+            },
+            activeVessel: '',
+            interventions: {
+                'PTA': false,
+                'Scoring Balloon': false,
+                'Atherectomy': false,
+                'Scoring Balloon': false,
+                'DCB': false,
+                'BMS': false,
+                'DES': false,
+                'Supera': false
+            },
+            activeIntervention: ''
         };
         return _this;
     }
@@ -67040,10 +67132,10 @@ var FindCase = function (_React$Component) {
         key: 'componentWillUpdate',
         value: function componentWillUpdate(nextProps, nextState) {
             this.resultsDisplay = null;
-            if (nextState.id != '' || nextState.targetVessel != '') {
+            if (nextState.activeVessel != '' || nextState.activeIntervention != '') {
                 var navigate = this.props.navigation.navigate;
 
-                var cases = (0, _utilities.getCases)(nextState.id, nextState.targetVessel);
+                var cases = (0, _utilities.getCases)(nextState.activeVessel, nextState.activeIntervention);
 
                 this.resultsDisplay = Object.keys(cases).map(function (c, index) {
                     return _react2.default.createElement(
@@ -67088,49 +67180,73 @@ var FindCase = function (_React$Component) {
             }
         }
     }, {
+        key: 'onInterventionsChange',
+        value: function onInterventionsChange(key) {
+            var interventions = this.state.interventions;
+            for (var i in interventions) {
+                if (i == key) {
+                    interventions[i] = !interventions[i];
+                } else {
+                    interventions[i] = false;
+                }
+            }
+            if (!interventions[key]) {
+                key = '';
+            }
+            this.setState({ activeIntervention: key, interventions: interventions });
+        }
+    }, {
+        key: 'onTargetVesselChange',
+        value: function onTargetVesselChange(key) {
+            var vessels = this.state.vessels;
+            for (var i in vessels) {
+                if (i == key) {
+                    vessels[i] = !vessels[i];
+                } else {
+                    vessels[i] = false;
+                }
+            }
+            if (!vessels[key]) {
+                key = '';
+            }
+            this.setState({ activeVessel: key, vessels: vessels });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
 
-            var interventionsDisplay = this.state.interventions.map(function (intervention, index) {
+            var targetLesionsDisplay = Object.keys(this.state.vessels).map(function (key, index) {
                 return _react2.default.createElement(_reactNativeCheckbox2.default, {
-                    checked: intervention.active,
+                    checked: _this2.state.vessels[key],
                     key: index,
                     onChange: function onChange() {
-                        return _this2.onInterventionsChange(index);
+                        return _this2.onTargetVesselChange(key);
                     },
-                    label: intervention.type
+                    label: key
+                });
+            });
+
+            var interventionsDisplay = Object.keys(this.state.interventions).map(function (key, index) {
+                return _react2.default.createElement(_reactNativeCheckbox2.default, {
+                    checked: _this2.state.interventions[key],
+                    key: index,
+                    onChange: function onChange() {
+                        return _this2.onInterventionsChange(key);
+                    },
+                    label: key
                 });
             });
 
             return _react2.default.createElement(
-                _reactNative.View,
-                null,
-                _react2.default.createElement(
-                    _reactNative.Text,
-                    { style: _Style2.default.inputHeader },
-                    'Case Number'
-                ),
-                _react2.default.createElement(_reactNative.TextInput, {
-                    style: _Style2.default.input,
-                    value: this.state.id,
-                    onChangeText: function onChangeText(text) {
-                        _this2.setState({ id: text });
-                    },
-                    keyboardType: 'numbers-and-punctuation'
-                }),
+                _reactNative.ScrollView,
+                { keyboardShouldPersistTaps: 'handled' },
                 _react2.default.createElement(
                     _reactNative.Text,
                     { style: _Style2.default.inputHeader },
                     'Target Vessel'
                 ),
-                _react2.default.createElement(_reactNative.TextInput, {
-                    style: _Style2.default.input,
-                    value: this.state.targetVessel,
-                    onChangeText: function onChangeText(text) {
-                        _this2.setState({ targetVessel: text });
-                    }
-                }),
+                targetLesionsDisplay,
                 _react2.default.createElement(
                     _reactNative.Text,
                     { style: _Style2.default.inputHeader },
@@ -67142,11 +67258,7 @@ var FindCase = function (_React$Component) {
                     { style: _Style2.default.inputHeader },
                     'Results:'
                 ),
-                _react2.default.createElement(
-                    _reactNative.ScrollView,
-                    { keyboardShouldPersistTaps: 'handled' },
-                    this.resultsDisplay
-                )
+                this.resultsDisplay
             );
         }
     }]);
